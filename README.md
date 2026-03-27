@@ -13,13 +13,15 @@ To install:
     
     Make sure Node version matches. If it doesn't go to the nodejs.org website and download a prebuilt version.
     
-    Clone the git repository.
+    Clone the git repository using GitBash or Terminal. Navigate to the desired directory in said shell/terminal, then enter 'git clone https://github.com/doronbarasch/zumiez-qa-assignment.git'
 
-    Use a terminal to navigate to the directory for the git repository.
+    Use the terminal to move to the directory for the repository now that it's been installed.
 
     To make sure Playwright is installed, enter npm init playwright@latest
 
     Select Javascript for the language and then the defaults for the remaining setting questions.
+
+Alternatively, it's possible to use VSCode to clone the repository and then the built-in terminal in VSCode to install Playwright.
 
 To run:
     
@@ -31,7 +33,9 @@ To run:
     
     To run specific test by title enter into terminal: npx playwright test -g "Name of specific test", e.g. npx playwright test -g "Detail and Add to Cart w/ Options"
     
-The above commands will run the tests in headless mode. To run the tests in headed mode, add --headed to the end of any of the commands
+The above commands will run the tests in headless mode. To run the tests in headed mode, add --headed to the end of any of the commands.
+
+Additionally, it's also possible to use VSCode to run the tests if the Microsoft-released Playwright plugin has been installed. This enables using the VSCode UI to run tests.
 
 To view report:
     
