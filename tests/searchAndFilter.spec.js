@@ -38,18 +38,12 @@ test("Search and Filter", async function ({page}){
     // Check the first checkbox on the page (tends to be filter)
     await searchResultsPage.applyFirstFilter()
 
-    /*Intentionally leaving the below verifications out of POM for now
-      because I'm not sure they should be included in the SearchResultsPage
-      class bc of how filtering works. In other words, I feel like filtered
-      search results is a bit of a gray area for still being a searchResults
-      page vs being a new type of page*/
     //Check URL for customFilters
-    await expect(page).toHaveURL(/customFilters/)
+    await searchResultsPage.verifyFilterUrl()
 
     //Check Now Shopping by
-    await expect(page.locator('h3.ResetAttributes-Title')).toHaveText("Now shopping by:")
-    await expect(page.locator('.ResetAttributes-AttributeOption')).toHaveText(filtName)
+    await searchResultsPage.verifyFilterNowShoppingBy(filtName)
 
     //Sanity check number of results based on # results from clicked checkbox
-    await expect(page.getByText("items found")).toContainText(numFiltRes)
+    await searchResultsPage.verifyFilterItemsFound(numFiltRes)
 })

@@ -24,4 +24,5 @@ Project Structure:
     Test files are located in the tests folder. The *.spec.js files contain the individual tests. For this exercise, I only wrote one test for each of the scenarios, but in an actual testing scenario it may make sense to break the tests up into smaller tests for sake of isolating issue sources (i.e. in this case, split the search and filter into a search test and a filter test).
     Reports are found in the playwright-report folder as noted above. Playwright generates an html file for each test run.
     In the top level directory, playwright.config.js contains the configuration settings for test runs. This is where browsers to run tests in can be selected, amongst other options like default timeout settings, test directory, etc.
+    The Page Object Models are in the pages folder. There's one for the base page, which I've intended as the locators that are present on every page for the application. The next is the search results page, which is for when there's a user initiated search. And lastly, there's a product details page for use with pages for single products.
 

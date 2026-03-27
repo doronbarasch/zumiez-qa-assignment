@@ -11,6 +11,9 @@ class SearchResultsPage extends BasePage {
         this.itemsFound=page.getByText("items found")
         this.firstFilterLabel=page.locator("(//div[@class='ProductAttributeValue-Label'])[1]")
         this.firstFilterCheckbox=page.locator('input[type="checkbox"]').first()
+        //The filter related locators should only be set once a filter is active
+        this.filtHeader=undefined
+        this.filtName=undefined
     }
 
     /*VERIFIERS*/
@@ -35,6 +38,23 @@ class SearchResultsPage extends BasePage {
         await expect(this.firstFilterLabel).toHaveText(/([1-9][0-9]*)/)
     }
 
+    //Verify that a filter is acitve based on the URL
+    async verifyFilterUrl() {
+        await expect(this.page).toHaveURL(/customFilters/)
+    }
+
+    //Verify that a filter is active based on the "Now shopping by" section
+    async verifyFilterNowShoppingBy(filterName) {
+        await expect(this.filtHeader).toHaveText("Now shopping by:")
+        await expect(this.filtName).toHaveText(filterName)
+    }
+
+    //Verify that the number of items when clicking on the filter is same as items found
+    //while filter is active
+    async verifyFilterItemsFound(numFiltRes) {
+        await expect(this.itemsFound).toContainText(numFiltRes)
+    }
+
     /*GETTERS*/
     //Gets the name and number of items for the first filter on the search results page
     async getFirstFiltNameNum() {
@@ -48,7 +68,10 @@ class SearchResultsPage extends BasePage {
     /*ACTIONS*/
     //Apply the first filter available for the search results page
     async applyFirstFilter() {
-        this.firstFilterCheckbox.click()
+        await this.firstFilterCheckbox.click()
+        //Make sure to add locators for filter-based items
+        this.filtHeader= await this.page.locator('h3.ResetAttributes-Title')
+        this.filtName= await this.page.locator('.ResetAttributes-AttributeOption')
     }
 }
 module.exports=SearchResultsPage

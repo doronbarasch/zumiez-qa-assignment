@@ -1,5 +1,6 @@
 const {test, expect} = require("@playwright/test")
 const BasePage=require("../pages/basepage")
+const ProductDetailsPage=require("../pages/productdetailspage")
 
 //This test currently is based on the assumption that the result for the 386505 SKU has options in stock
 test("Detail and Add to Cart w/ Options", async function({page}){
@@ -15,31 +16,26 @@ test("Detail and Add to Cart w/ Options", async function({page}){
     //Click the product card
     await page.locator('div.ProductCard-LinkInnerWrapper.ProductCard-LinkInnerWrapper_loaded').first().click()
 
-    //This await is necessary in order to ensure we the list of product options to iterate over
-    /*Right now, this regex only works with size field sets. Could expand regex to include color
-    /but unnecessary in cases where we don't care about iterating over the actual options*/
-    await expect(page.locator('.ProductAttributeValue-String').first()).toHaveText(/(S)*(M\b)*(L)*(XL)*(XXL)*(3XL)*(One Size)*/)
+    //Make productDetailsPage since we are now on a product details page
+    const productDetailsPage = new ProductDetailsPage(page)
+    
+    //This await is necessary in order to ensure we have the list of product options to iterate over
+    await productDetailsPage.verifySizeOptions()
 
-    //Iterate through enabled product options, select the last enabled one
-    for(const row of await page.locator('.ProductAttributeValue-String').filter({hasText: /(S)*(M\b)*(L)*(XL)*(XXL)*(3XL)*(One Size)*/}).all()) {
-        const isDisabled = !(await row.isEnabled())
-        if (!isDisabled) {
-            await row.click()
-        }
-    }
-
-    //Add item to cart, assume possible
-    await page.getByRole('button').filter({hasText: ("ADD TO MY BAG")}).click()
+    //Pick an enabled size option
+    await productDetailsPage.pickSomeEnabledOption()
 
     //Grab values from page to double check against item in mini cart
-    const prodName = await page.locator('h1.ProductActions-Title').allTextContents()
-    const selectedOptionText = await page.locator('.ProductConfigurableAttributes-SelectedOptionLabel').allTextContents()
+    const prodName = await productDetailsPage.getProdName()
+    const selectedOptionText = await productDetailsPage.getSelectedOption()
+
+    //Add item to cart, assume possible
+    await productDetailsPage.addItemToCart()
 
     //Confirm correct counter in cart icon, just use 1 for now
-    await expect(page.locator('.Header-MinicartItemCount')).toHaveText("1")
+    await productDetailsPage.verifyMiniCartCount("1")
 
     // Confirm correct item and option in cart
-    await expect(page.locator(".CartItem-Heading")).toHaveText(prodName)
-    await expect(page.locator("div[class='CartItem-Options'] span")).toContainText(selectedOptionText)
-
+    await productDetailsPage.verifyMcItemName(prodName)
+    await productDetailsPage.verifyMcItemOpt(selectedOptionText)
 })
