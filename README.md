@@ -17,11 +17,11 @@ To run:
     
     Using a terminal, navigate to the directory for the git repository
     
-    For all tests enter into terminal: npx playwright test
+    To run all tests enter into terminal: npx playwright test
     
-    For specific test files enter into terminal: npx playwright test <filename>
+    To run specific test files enter into terminal: npx playwright test <filename>
     
-    For specific test by title enter into terminal: npx playwright test -g "Name of specific test", e.g. npx playwright test -g "Detail and Add to Cart w/ Options"
+    To run specific test by title enter into terminal: npx playwright test -g "Name of specific test", e.g. npx playwright test -g "Detail and Add to Cart w/ Options"
     
 The above commands will run the tests in headless mode. To run the tests in headed mode, add --headed to the end of any of the commands
 
@@ -30,6 +30,8 @@ To view report:
     After running a test, enter into terminal: npx playwright show-report
     
     Alternatively, use a file explorer to open the index.html file in the playwright-reports folder. Note that this will be the report for the most recent test run
+
+I've also included screenshots of the most recent test run and the HTML file of that report in the repository. See 'Zumiez Playwright Test Report.html' for the HTML report and any of the .pngs for screenshots
 
 Project Structure:
     
