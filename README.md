@@ -1,51 +1,63 @@
 # zumiez-qa-assignment
-QA Engineer Assignment for Zumiez
+# QA Engineer Assignment for Zumiez
 
-Prerequisites:
+## Prerequisites:
     
-    Node: v24.14.1
+Node: v24.14.1
 
-    NPM version: 11.11.0
+NPM version: 11.11.0
     
-    Playwright version: 1.58.2
+Playwright version: 1.58.2
 
-To install:
+## To install:
     
-    Make sure Node version matches. If it doesn't go to the nodejs.org website and download a prebuilt version.
+Make sure Node version matches. If it doesn't go to the nodejs.org website and download a prebuilt version.
     
-    Clone the git repository using GitBash or Terminal. Navigate to the desired directory in said shell/terminal, then enter 'git clone https://github.com/doronbarasch/zumiez-qa-assignment.git'
+Clone the git repository using GitBash or Terminal. Navigate to the desired directory in said shell/terminal, then enter
+    
+    git clone https://github.com/doronbarasch/zumiez-qa-assignment.git
 
-    Use the terminal to move to the directory for the repository now that it's been installed.
+Use the terminal to move to the directory for the repository now that it's been installed.
 
-    To make sure Playwright is installed, enter npm init playwright@latest
+To make sure Playwright is installed, enter
+        
+    npm init playwright@latest
 
-    Select Javascript for the language and then the defaults for the remaining setting questions.
+Select Javascript for the language and then the defaults for the remaining setting questions.
 
 Alternatively, it's possible to use VSCode to clone the repository and then the built-in terminal in VSCode to install Playwright.
 
-To run:
+## To run:
     
-    Using a terminal, navigate to the directory for the git repository (if just installed, no action required)
+Using a terminal, navigate to the directory for the git repository (if just installed, no action required)
     
-    To run all tests enter into terminal: npx playwright test
+To run all tests enter into terminal:
     
-    To run specific test files enter into terminal: npx playwright test <filename>
+    npx playwright test
     
-    To run specific test by title enter into terminal: npx playwright test -g "Name of specific test", e.g. npx playwright test -g "Detail and Add to Cart w/ Options"
+To run specific test files enter into terminal:
+    
+    npx playwright test <filename>
+    
+To run specific test by title enter into terminal:
+    
+    npx playwright test -g "Name of specific test", e.g. npx playwright test -g "Detail and Add to Cart w/ Options"
     
 The above commands will run the tests in headless mode. To run the tests in headed mode, add --headed to the end of any of the commands.
 
 Additionally, it's also possible to use VSCode to run the tests if the Microsoft-released Playwright plugin has been installed. This enables using the VSCode UI to run tests.
 
-To view report:
+## To view report:
     
-    After running a test, enter into terminal: npx playwright show-report
+After running a test, enter into terminal:
+
+    npx playwright show-report
     
-    Alternatively, use a file explorer to open the index.html file in the playwright-reports folder. Note that this will be the report for the most recent test run
+Alternatively, use a file explorer to open the index.html file in the playwright-reports folder. Note that this will be the report for the most recent test run
 
 I've also included screenshots of the most recent test run and the HTML file of that report in the repository. See 'Zumiez Playwright Test Report.html' for the HTML report and any of the .pngs for screenshots
 
-Project Structure:
+## Project Structure:
     
 Test files are located in the tests folder. The *.spec.js files contain the individual tests. For this exercise, I only wrote one test for each of the scenarios, but in an actual testing scenario it may make sense to break the tests up into smaller tests for sake of isolating issue sources (i.e. in this case, split the search and filter into a search test and a filter test).
     
