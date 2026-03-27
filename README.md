@@ -4,18 +4,26 @@ QA Engineer Assignment for Zumiez
 Prerequisites:
     
     Node: v24.14.1
+
+    NPM version: 11.11.0
     
-    Playwright: 1.58.2
+    Playwright version: 1.58.2
 
 To install:
     
-    Make sure Node version matches
+    Make sure Node version matches. If it doesn't go to the nodejs.org website and download a prebuilt version.
     
-    Clone the git repository
+    Clone the git repository.
+
+    Use a terminal to navigate to the directory for the git repository.
+
+    To make sure Playwright is installed, enter npm init playwright@latest
+
+    Select Javascript for the language and then the defaults for the remaining setting questions.
 
 To run:
     
-    Using a terminal, navigate to the directory for the git repository
+    Using a terminal, navigate to the directory for the git repository (if just installed, no action required)
     
     To run all tests enter into terminal: npx playwright test
     
