@@ -1,0 +1,23 @@
+{
+  "name": "zumiez-qa-assignment",
+  "version": "1.0.0",
+  "description": "QA Engineer Assignment for Zumiez",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/doronbarasch/zumiez-qa-assignment.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/doronbarasch/zumiez-qa-assignment/issues"
+  },
+  "homepage": "https://github.com/doronbarasch/zumiez-qa-assignment#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^25.5.0"
+  }
+}
