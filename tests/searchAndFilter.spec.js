@@ -1,42 +1,48 @@
 const {test, expect} = require("@playwright/test")
+const BasePage=require("../pages/basepage")
+const SearchResultsPage = require("../pages/searchresultspage")
 
 test("Search and Filter", async function ({page}){
+    //Go to the stage 2 website
     await page.goto("https://stage2-www.zumiez.com")
+
+    //Initialize the base page model
+    const basePage = new BasePage(page)
 
     //Search term to use in the search, assumes at least 1 result
     const searchTerm = "skateboard"
 
-    //Enter search term in search field
-    //await page.locator('input.SearchField-Input').fill(searchTerm)
-    await page.getByLabel('Search').first().fill(searchTerm)
+    //Search for product using provided search term
+    await basePage.searchForProduct(searchTerm)
 
-    //Ensure focus is on search field, then press enter to search
-    await page.getByLabel('Search').first().focus()
-    await page.keyboard.press('Enter')
-
+    //Make searchResultsPage since now we are on a search results page
+    const searchResultsPage = new SearchResultsPage(page,searchTerm)
+    
     //Check URL to see if search ran
-    const searchUrlRegEx = new RegExp(String.raw`search\/${searchTerm.replaceAll(" ","%20")}`) //the replaceAll accounts for any spaces in search term
-    await expect(page).toHaveURL(searchUrlRegEx)
+    await searchResultsPage.verifySearchUrl()
 
     //Check search results header to double check header reflects correct search term
-    await expect(page.getByRole('heading').filter({hasText: "Search results for:"})).toContainText(searchTerm)
+    await searchResultsPage.verifySearchHeading()
 
     //Check # of items found, should be greater than 0 based on assumption for search term
-    //Note: text is still "items found" even if only 1 item is found
-    await expect(page.getByText("items found")).toHaveText(/[1-9][0-9]*/)
+    await searchResultsPage.verifyItemsFound()
 
     //Filter search results
     //Await the first checkbox to have a "(<number>)", as that will be the first filter checkbox
-    await expect(page.locator('label.Field-CheckboxLabel').locator('div').nth(1)).toHaveText(/([1-9][0-9]*)/)
+    //Doing this to also try and avoid any race conditions
+    await searchResultsPage.verifyFilterExists()
+
     //Grab name of and number of items for filter
-    const filterTitle = await page.locator('label.Field-CheckboxLabel').locator('div').nth(1).allTextContents()
-    const filtArr = filterTitle.toString().split("(")
-    const filtName=filtArr[0]
-    const numFiltRes = filtArr[1].substring(0,filtArr[1].length-1)
+    const {filtName, numFiltRes} = await searchResultsPage.getFirstFiltNameNum()
 
     // Check the first checkbox on the page (tends to be filter)
-    await page.locator('input[type="checkbox"]').first().check()
+    await searchResultsPage.applyFirstFilter()
 
+    /*Intentionally leaving the below verifications out of POM for now
+      because I'm not sure they should be included in the SearchResultsPage
+      class bc of how filtering works. In other words, I feel like filtered
+      search results is a bit of a gray area for still being a searchResults
+      page vs being a new type of page*/
     //Check URL for customFilters
     await expect(page).toHaveURL(/customFilters/)
 

@@ -1,18 +1,16 @@
 const {test, expect} = require("@playwright/test")
+const BasePage=require("../pages/basepage")
 
 //This test currently is based on the assumption that the result for the 386505 SKU has options in stock
 test("Detail and Add to Cart w/ Options", async function({page}){
     await page.goto("https://stage2-www.zumiez.com")
 
+    const basePage = new BasePage(page)
     //Search term to use in the search, assumes at least 1 result
     const searchTerm = "386505"
 
-    //Enter search term in search field
-    await page.locator('input.SearchField-Input').fill(searchTerm)
-
-    //Ensure focus is on search field, then press enter to search
-    await page.locator('input.SearchField-Input').focus()
-    await page.keyboard.press('Enter')
+    //Search for product using provided search term
+    await basePage.searchForProduct(searchTerm)
 
     //Click the product card
     await page.locator('div.ProductCard-LinkInnerWrapper.ProductCard-LinkInnerWrapper_loaded').first().click()
